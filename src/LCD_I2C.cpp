@@ -1,7 +1,7 @@
 /*
-    LCD_I2C - Arduino library to control a 16x2 LCD via an I2C adapter based on PCF8574T
+    LCD_I2C - Arduino library to control a 16x2 LCD via an I2C adapter based on PCF8574
 
-    Copyright(C) 2020 Blackhack - davidaristi.0504@gmail.com
+    Copyright(C) 2020 Blackhack <davidaristi.0504@gmail.com>
 
     This program is free software : you can redistribute it and /or modify
     it under the terms of the GNU General Public License as published by

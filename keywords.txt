@@ -1,4 +1,9 @@
+# Syntax Coloring Map For LCD_I2C
+
+# Datatypes (KEYWORD1)
 LCD_I2C	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
 begin	KEYWORD2
 backlight	KEYWORD2
 clear	KEYWORD2
@@ -9,3 +14,7 @@ cursor	KEYWORD2
 cursorBlink	KEYWORD2
 cursorPosition	KEYWORD2
 write	KEYWORD2
+
+# Instances (KEYWORD2)
+
+# Constants (LITERAL1)
