@@ -64,12 +64,16 @@ public:
     void backlight(bool on);
 
     void clear();
-    void returnHome();
-    void direction(bool leftToRight);
-    void display(bool on);
-    void cursor(bool on);
-    void cursorBlink(bool on);
-    void cursorPosition(uint8_t row, uint8_t col);
+    void home();
+    void leftToRight();
+    void rightToLeft();
+    void display();
+    void noDisplay();
+    void cursor();
+    void noCursor();
+    void blink();
+    void noBlink();
+    void setCursor(uint8_t row, uint8_t col);
 
     // Method used by the Arduino class "Print" which is the one that provides the .print(string) method
     virtual size_t write(uint8_t character);

@@ -46,7 +46,7 @@ void LCD_I2C::clear()
     delayMicroseconds(1600);
 }
 
-void LCD_I2C::returnHome()
+void LCD_I2C::home()
 {
     _output.rs = 0;
     _output.rw = 0;
@@ -56,72 +56,108 @@ void LCD_I2C::returnHome()
 }
 
 // Part of Entry mode set
-void LCD_I2C::direction(bool leftToRight)
+void LCD_I2C::leftToRight()
 {
     _output.rs = 0;
     _output.rw = 0;
 
-    if (leftToRight)
-        _entryState |= 1 << 1;
-    else
-        _entryState &= ~(1 << 1);
+    _entryState |= 1 << 1;
+
+    LCD_Write(0b00000100 | _entryState);
+    delayMicroseconds(37);
+}
+
+// Part of Entry mode set
+void LCD_I2C::rightToLeft()
+{
+    _output.rs = 0;
+    _output.rw = 0;
+
+    _entryState &= ~(1 << 1);
 
     LCD_Write(0b00000100 | _entryState);
     delayMicroseconds(37);
 }
 
 // Part of Display control
-void LCD_I2C::display(bool on)
+void LCD_I2C::display()
 {
     _output.rs = 0;
     _output.rw = 0;
 
-    if (on)
-        _displayState |= 1 << 2;
-    else
-        _displayState &= ~(1 << 2);
+    _displayState |= 1 << 2;
 
     LCD_Write(0b00001000 | _displayState);
     delayMicroseconds(37);
 }
 
 // Part of Display control
-void LCD_I2C::cursor(bool on)
+void LCD_I2C::noDisplay()
 {
     _output.rs = 0;
     _output.rw = 0;
 
-    if (on)
-        _displayState |= 1 << 1;
-    else
-        _displayState &= ~(1 << 1);
+    _displayState &= ~(1 << 2);
 
     LCD_Write(0b00001000 | _displayState);
     delayMicroseconds(37);
 }
 
 // Part of Display control
-void LCD_I2C::cursorBlink(bool on)
+void LCD_I2C::cursor()
 {
     _output.rs = 0;
     _output.rw = 0;
 
-    if (on)
-        _displayState |= 1;
-    else
-        _displayState &= ~1;
+    _displayState |= 1 << 1;
+
+    LCD_Write(0b00001000 | _displayState);
+    delayMicroseconds(37);
+}
+
+// Part of Display control
+void LCD_I2C::noCursor()
+{
+    _output.rs = 0;
+    _output.rw = 0;
+
+    _displayState &= ~(1 << 1);
+
+    LCD_Write(0b00001000 | _displayState);
+    delayMicroseconds(37);
+}
+
+// Part of Display control
+void LCD_I2C::blink()
+{
+    _output.rs = 0;
+    _output.rw = 0;
+
+    _displayState |= 1;
+
+    LCD_Write(0b00001000 | _displayState);
+    delayMicroseconds(37);
+}
+
+// Part of Display control
+void LCD_I2C::noBlink()
+{
+    _output.rs = 0;
+    _output.rw = 0;
+
+    _displayState &= ~1;
 
     LCD_Write(0b00001000 | _displayState);
     delayMicroseconds(37);
 }
 
 // Set DDRAM address
-void LCD_I2C::cursorPosition(uint8_t row, uint8_t col)
+void LCD_I2C::setCursor(uint8_t row, uint8_t col)
 {
     _output.rs = 0;
     _output.rw = 0;
 
-    uint8_t newAddress = (row == 1 ? 0x00 : 0x40);
+    uint8_t newAddress = (row == 0 ? 0x00 : 0x40);
     newAddress += col;
 
     LCD_Write(0b10000000 | newAddress);
@@ -154,9 +190,9 @@ void LCD_I2C::InitializeLCD()
     LCD_Write(0b00101000); // Function Set - 4 bits(Still), 2 lines, 5x8 font
     delayMicroseconds(37);
 
-    display(true);
+    display();
     clear();
-    direction(true);
+    leftToRight();
 }
 
 void LCD_I2C::I2C_Write(uint8_t output)
