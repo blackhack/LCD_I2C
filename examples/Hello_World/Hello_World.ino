@@ -23,10 +23,10 @@ LCD_I2C lcd(0x27); // Default address of most PCF8574T modules, change according
 
 void setup()
 {
-    lcd.begin(); // If you are using more I2C devices using the Wire library use lcd.begin(false)       
+    lcd.begin(); // If you are using more I2C devices using the Wire library use lcd.begin(false)
                  // this stop the library(LCD_I2C) from calling Wire.begin()
     lcd.backlight(true);
-}                
+}
 
 void loop()
 {

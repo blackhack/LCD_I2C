@@ -22,27 +22,27 @@
 
 #include "arduino.h"
 
- /* This struct helps us constructing the I2C output based on data and control outputs.
- Because the LCD is set to 4-bit mode, 4 bits of the I2C output are for the control outputs
- while the other 4 bits are for the 8 bits of data which are send in parts using the enable output.*/
+/* This struct helps us constructing the I2C output based on data and control outputs.
+   Because the LCD is set to 4-bit mode, 4 bits of the I2C output are for the control outputs
+   while the other 4 bits are for the 8 bits of data which are send in parts using the enable output.*/
 struct OutputState
-{	
-	uint8_t rs = 0;
+{
+    uint8_t rs = 0;
     uint8_t rw = 0;
     uint8_t E = 0;
     uint8_t Led = 0;
     uint8_t data = 0;
 
-	uint8_t GetLowData()
-	{ 
-		uint8_t buffer = rs;
-		buffer |= rw << 1;
-		buffer |= E << 2;
-		buffer |= Led << 3;
-		buffer |= (data & 0x0F) << 4;
+    uint8_t GetLowData()
+    {
+        uint8_t buffer = rs;
+        buffer |= rw << 1;
+        buffer |= E << 2;
+        buffer |= Led << 3;
+        buffer |= (data & 0x0F) << 4;
 
-		return buffer;
-	}
+        return buffer;
+    }
 
     uint8_t GetHighData()
     {
@@ -50,29 +50,29 @@ struct OutputState
         buffer |= rw << 1;
         buffer |= E << 2;
         buffer |= Led << 3;
-		buffer |= (data & 0xF0);
+        buffer |= (data & 0xF0);
         return buffer;
     }
 };
 
 class LCD_I2C : public Print
 {
- public:
-	 LCD_I2C(uint8_t address) { _address = address; }
+public:
+    LCD_I2C(uint8_t address) { _address = address; }
 
-	void begin(bool beginWire = true);
-	void backlight(bool on);
+    void begin(bool beginWire = true);
+    void backlight(bool on);
 
     void clear();
     void returnHome();
     void direction(bool leftToRight);
-	void display(bool on);
-	void cursor(bool on);
-	void cursorBlink(bool on);
-	void cursorPosition(uint8_t row, uint8_t col);
+    void display(bool on);
+    void cursor(bool on);
+    void cursorBlink(bool on);
+    void cursorPosition(uint8_t row, uint8_t col);
 
     // Method used by the Arduino class "Print" which is the one that provides the .print(string) method
-	virtual size_t write(uint8_t character);
+    virtual size_t write(uint8_t character);
 
 private:
     void InitializeLCD();
@@ -80,10 +80,10 @@ private:
     void LCD_Write(uint8_t output, bool initialization = false);
 
 private:
-	uint8_t _address;
-	OutputState _output;
-	uint8_t _displayState = 0x00;
-	uint8_t _entryState = 0x00;
+    uint8_t _address;
+    OutputState _output;
+    uint8_t _displayState = 0x00;
+    uint8_t _entryState = 0x00;
 };
 
 #endif
