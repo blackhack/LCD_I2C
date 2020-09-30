@@ -1,0 +1,11 @@
+LCD_I2C	KEYWORD1
+begin	KEYWORD2
+backlight	KEYWORD2
+clear	KEYWORD2
+returnHome	KEYWORD2
+direction	KEYWORD2
+display	KEYWORD2
+cursor	KEYWORD2
+cursorBlink	KEYWORD2
+cursorPosition	KEYWORD2
+write	KEYWORD2
