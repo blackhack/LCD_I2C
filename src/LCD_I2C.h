@@ -61,7 +61,8 @@ public:
     LCD_I2C(uint8_t address) { _address = address; }
 
     void begin(bool beginWire = true);
-    void backlight(bool on);
+    void backlight();
+    void noBacklight();
 
     void clear();
     void home();

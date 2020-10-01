@@ -25,7 +25,7 @@ void setup()
 {
     lcd.begin(); // If you are using more I2C devices using the Wire library use lcd.begin(false)
                  // this stop the library(LCD_I2C) from calling Wire.begin()
-    lcd.backlight(true);
+    lcd.backlight();
 }
 
 void loop()
@@ -38,13 +38,13 @@ void loop()
     // Flashing the backlight
     for (int i = 0; i < 5; ++i)
     {
-        lcd.backlight(true);
+        lcd.backlight();
         delay(50);
-        lcd.backlight(false);
+        lcd.noBacklight();
         delay(50);
     }
 
-    lcd.backlight(true);
+    lcd.backlight();
     lcd.clear();
     delay(500);
 }

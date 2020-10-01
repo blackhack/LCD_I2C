@@ -6,6 +6,7 @@ LCD_I2C	KEYWORD1
 # Methods and Functions (KEYWORD2)
 begin	KEYWORD2
 backlight	KEYWORD2
+noBacklight	KEYWORD2
 clear	KEYWORD2
 returnHome	KEYWORD2
 direction	KEYWORD2

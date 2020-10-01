@@ -31,9 +31,15 @@ void LCD_I2C::begin(bool beginWire)
     InitializeLCD();
 }
 
-void LCD_I2C::backlight(bool on)
+void LCD_I2C::backlight()
 {
-    _output.Led = on ? 1 : 0;
+    _output.Led = 1;
+    I2C_Write(0b00000000 | _output.Led << 3); // Led pin is independent from LCD data and control lines.
+}
+
+void LCD_I2C::noBacklight()
+{
+    _output.Led = 0;
     I2C_Write(0b00000000 | _output.Led << 3); // Led pin is independent from LCD data and control lines.
 }
 
