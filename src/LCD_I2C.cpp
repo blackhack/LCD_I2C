@@ -85,6 +85,30 @@ void LCD_I2C::rightToLeft()
     delayMicroseconds(37);
 }
 
+// Part of Entry mode set
+void LCD_I2C::autoscroll()
+{
+    _output.rs = 0;
+    _output.rw = 0;
+
+    _entryState |= 1;
+
+    LCD_Write(0b00000100 | _entryState);
+    delayMicroseconds(37);
+}
+
+// Part of Entry mode set
+void LCD_I2C::noAutoscroll()
+{
+    _output.rs = 0;
+    _output.rw = 0;
+
+    _entryState &= ~1;
+
+    LCD_Write(0b00000100 | _entryState);
+    delayMicroseconds(37);
+}
+
 // Part of Display control
 void LCD_I2C::display()
 {
@@ -157,8 +181,28 @@ void LCD_I2C::noBlink()
     delayMicroseconds(37);
 }
 
+// Part of Cursor or display shift
+void LCD_I2C::scrollDisplayLeft()
+{
+    _output.rs = 0;
+    _output.rw = 0;
+
+    LCD_Write(0b00011000);
+    delayMicroseconds(37);
+}
+
+// Part of Cursor or display shift
+void LCD_I2C::scrollDisplayRight()
+{
+    _output.rs = 0;
+    _output.rw = 0;
+
+    LCD_Write(0b00011100);
+    delayMicroseconds(37);
+}
+
 // Set DDRAM address
-void LCD_I2C::setCursor(uint8_t row, uint8_t col)
+void LCD_I2C::setCursor(uint8_t col, uint8_t row)
 {
     _output.rs = 0;
     _output.rw = 0;

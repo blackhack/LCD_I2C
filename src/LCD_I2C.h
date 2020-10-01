@@ -68,13 +68,17 @@ public:
     void home();
     void leftToRight();
     void rightToLeft();
+    void autoscroll();
+    void noAutoscroll();
     void display();
     void noDisplay();
     void cursor();
     void noCursor();
     void blink();
     void noBlink();
-    void setCursor(uint8_t row, uint8_t col);
+    void scrollDisplayLeft();
+    void scrollDisplayRight();
+    void setCursor(uint8_t col, uint8_t row);
 
     // Method used by the Arduino class "Print" which is the one that provides the .print(string) method
     virtual size_t write(uint8_t character);
