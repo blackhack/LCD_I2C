@@ -201,6 +201,23 @@ void LCD_I2C::scrollDisplayRight()
     delayMicroseconds(37);
 }
 
+// Set CGRAM address
+void LCD_I2C::createChar(uint8_t location, uint8_t charmap[])
+{
+    _output.rs = 0;
+    _output.rw = 0;
+
+    location %= 8;
+
+    LCD_Write(0b01000000 | (location << 3));
+    delayMicroseconds(37);
+
+    for (int i = 0; i < 8; i++)
+        write(charmap[i]);
+
+    setCursor(0, 0); // Set the address pointer back to the DDRAM
+}
+
 // Set DDRAM address
 void LCD_I2C::setCursor(uint8_t col, uint8_t row)
 {
