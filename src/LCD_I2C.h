@@ -20,7 +20,7 @@
 #ifndef _LCD_I2C_h
 #define _LCD_I2C_h
 
-#include "arduino.h"
+#include "Arduino.h"
 
 /* This struct helps us constructing the I2C output based on data and control outputs.
    Because the LCD is set to 4-bit mode, 4 bits of the I2C output are for the control outputs
