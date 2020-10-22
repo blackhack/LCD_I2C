@@ -31,7 +31,7 @@ void setup()
 void loop()
 {
     lcd.print("     Hello"); // You can make spaces using well... spaces
-    lcd.setCursor(1, 5); // Or setting the cursor in the desired position.
+    lcd.setCursor(5, 1); // Or setting the cursor in the desired position.
     lcd.print("World!");
     delay(500);
 

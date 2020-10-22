@@ -238,6 +238,8 @@ size_t LCD_I2C::write(uint8_t character)
 
     LCD_Write(character);
     delayMicroseconds(41);
+
+    return 1;
 }
 
 void LCD_I2C::InitializeLCD()
