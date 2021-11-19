@@ -222,7 +222,6 @@ void LCD_I2C::createChar(uint8_t location, uint8_t charmap[])
 // Set DDRAM address
 void LCD_I2C::setCursor(uint8_t col, uint8_t row)
 {
-#ifdef
     static const uint8_t row_offsets[] = {0x00, 0x40, 0x14, 0x54};
     _output.rs = 0;
     _output.rw = 0;
