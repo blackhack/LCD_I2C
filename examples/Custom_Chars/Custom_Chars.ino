@@ -19,7 +19,7 @@ along with this program.If not, see < https://www.gnu.org/licenses/>.
 
 #include <LCD_I2C.h>
 
-LCD_I2C lcd(0x27); // Default address of most PCF8574 modules, change according
+LCD_I2C lcd(0x27, 16, 2); // Default address of most PCF8574 modules, change according
 
 uint8_t happy[8] =
 {

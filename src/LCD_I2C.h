@@ -1,5 +1,6 @@
 /*
     LCD_I2C - Arduino library to control a 16x2 LCD via an I2C adapter based on PCF8574
+    * 2021-11-18 Brewmanz: make changes to also work for 20x4 LCD2004
 
     Copyright(C) 2020 Blackhack <davidaristi.0504@gmail.com>
 
@@ -58,7 +59,8 @@ struct OutputState
 class LCD_I2C : public Print
 {
 public:
-    LCD_I2C(uint8_t address) { _address = address; }
+    LCD_I2C(uint8_t address, uint8_t columns = 16, uint8_t rows = 2)
+    : _address(address), _columnMax(--columns), _rowMax(--rows) {}
 
     void begin(bool beginWire = true);
     void backlight();
@@ -91,6 +93,8 @@ private:
 
 private:
     uint8_t _address;
+    uint8_t _columnMax;
+    uint8_t _rowMax;
     OutputState _output;
     uint8_t _displayState = 0x00;
     uint8_t _entryState = 0x00;

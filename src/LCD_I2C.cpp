@@ -1,5 +1,6 @@
 /*
     LCD_I2C - Arduino library to control a 16x2 LCD via an I2C adapter based on PCF8574
+    * 2021-11-18 Brewmanz: make changes to also work for 20x4 LCD2004
 
     Copyright(C) 2020 Blackhack <davidaristi.0504@gmail.com>
 
@@ -221,11 +222,14 @@ void LCD_I2C::createChar(uint8_t location, uint8_t charmap[])
 // Set DDRAM address
 void LCD_I2C::setCursor(uint8_t col, uint8_t row)
 {
+    static const uint8_t row_offsets[] = {0x00, 0x40, 0x14, 0x54};
     _output.rs = 0;
     _output.rw = 0;
 
-    uint8_t newAddress = (row == 0 ? 0x00 : 0x40);
-    newAddress += col;
+    if(col > _columnMax) { col = _columnMax; } // sanity limits
+    if(row > _rowMax) { row = _rowMax; } // sanity limits
+
+    uint8_t newAddress = row_offsets[row] + col;
 
     LCD_Write(0b10000000 | newAddress);
     delayMicroseconds(37);

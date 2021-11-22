@@ -19,7 +19,7 @@
 
 #include <LCD_I2C.h>
 
-LCD_I2C lcd(0x27); // Default address of most PCF8574 modules, change according
+LCD_I2C lcd(0x27, 16, 2); // Default address of most PCF8574 modules, change according
 
 /*
 * When using lcd.print() (and almost everywhere you use string literals),
@@ -43,7 +43,7 @@ void loop()
     lcd.setCursor(10, 1);
     lcd.autoscroll();
 
-    for (int i = 0; i < 10; i++) 
+    for (int i = 0; i < 10; i++)
     {
         lcd.print(i);
         delay(200);
@@ -51,7 +51,7 @@ void loop()
 
     lcd.noAutoscroll();
     lcd.clear();
-    
+
     // Scroll left and right
     lcd.setCursor(10, 0);
     lcd.print(F("To the left!"));
