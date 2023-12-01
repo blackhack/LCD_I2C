@@ -22,7 +22,7 @@
 #include "Wire.h"
 
 /**
- * @brief funtion begin 
+ * @brief function begin 
  * 
  * @param beginWire if true start I²C wire
  */
