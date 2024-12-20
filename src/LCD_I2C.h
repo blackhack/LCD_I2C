@@ -36,23 +36,17 @@ struct OutputState
 
     uint8_t getLowData() const
     {
-        uint8_t buffer = rs;
-        buffer |= rw << 1;
-        buffer |= E << 2;
-        buffer |= Led << 3;
-        buffer |= (data & 0x0F) << 4;
-
-        return buffer;
+        return getCommonData() | ((data & 0x0F) << 4);
     }
 
     uint8_t getHighData() const
     {
-        uint8_t buffer = rs;
-        buffer |= rw << 1;
-        buffer |= E << 2;
-        buffer |= Led << 3;
-        buffer |= (data & 0xF0);
-        return buffer;
+        return getCommonData() | (data & 0xF0);
+    }
+
+private:
+    inline uint8_t getCommonData() const {
+    	return rs | (rw << 1) | (E << 2) | (Led << 3);
     }
 };
 
