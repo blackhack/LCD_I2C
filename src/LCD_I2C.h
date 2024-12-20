@@ -60,7 +60,7 @@ class LCD_I2C : public Print
 {
 public:
     LCD_I2C(uint8_t address, uint8_t columns = 16, uint8_t rows = 2)
-    : _address(address), _columnMax(--columns), _rowMax(--rows) {}
+    : _address(address), _columnMax(columns-1), _rowMax(rows-1), _displayState(0x00), _entryState(0x00) {}
 
     void begin(bool beginWire = true);
     void backlight();
@@ -93,11 +93,11 @@ private:
 
 private:
     uint8_t _address;
-    uint8_t _columnMax;
-    uint8_t _rowMax;
+    uint8_t _columnMax; // Last valid column index. Note the column index starts at zero.
+    uint8_t _rowMax;    // Last valid row index. Note the row index starts at zero.
     OutputState _output;
-    uint8_t _displayState = 0x00;
-    uint8_t _entryState = 0x00;
+    uint8_t _displayState;
+    uint8_t _entryState;
 };
 
 #endif
