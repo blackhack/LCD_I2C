@@ -21,11 +21,23 @@
 #include "LCD_I2C.h"
 #include "Wire.h"
 
+LCD_I2C::LCD_I2C(TwoWire& wire, uint8_t address, uint8_t columns, uint8_t rows)
+    : _wire(wire) // Use the TwoWire object passed as parameter.
+	, _address(address), _columnMax(columns-1), _rowMax(rows-1), _displayState(0x00), _entryState(0x00)
+{
+}
+
+LCD_I2C::LCD_I2C(uint8_t address, uint8_t columns, uint8_t rows)
+	: _wire(Wire) // Use the default object 'Wire'.
+	, _address(address), _columnMax(columns-1), _rowMax(rows-1), _displayState(0x00), _entryState(0x00)
+{
+}
+
 void LCD_I2C::begin(int sdaPin, int sclPin, bool beginWire)
 {
 #if defined (ESP32)
 	// ESP32 requires setting sda and scl pins.
-	Wire.setPins(sdaPin, sclPin);
+	_wire.setPins(sdaPin, sclPin);
 #endif
 	begin(beginWire);
 }
@@ -34,7 +46,7 @@ void LCD_I2C::begin(bool beginWire)
 {
 
 	if (beginWire)
-        Wire.begin();
+        _wire.begin();
 
     I2C_Write(0b00000000); // Clear i2c adapter
     delay(50); //Wait more than 40ms after powerOn.
@@ -280,9 +292,9 @@ void LCD_I2C::InitializeLCD()
 
 void LCD_I2C::I2C_Write(uint8_t output)
 {
-    Wire.beginTransmission(_address);
-    Wire.write(output);
-    Wire.endTransmission();
+    _wire.beginTransmission(_address);
+    _wire.write(output);
+    _wire.endTransmission();
 }
 
 void LCD_I2C::LCD_Write(uint8_t output, bool initialization)
