@@ -280,11 +280,11 @@ void LCD_I2C::LCD_Write(uint8_t output, bool initialization)
     _output.data = output;
 
     _output.E = true;
-    I2C_Write(_output.GetHighData());
+    I2C_Write(_output.getHighData());
     delayMicroseconds(1); // High part of enable should be >450 nS
 
     _output.E = false;
-    I2C_Write(_output.GetHighData());
+    I2C_Write(_output.getHighData());
 
     // During initialization we only send half a byte
     if (!initialization)
@@ -292,11 +292,11 @@ void LCD_I2C::LCD_Write(uint8_t output, bool initialization)
         delayMicroseconds(37); // I think we need a delay between half byte writes, but no sure how long it needs to be.
 
         _output.E = true;
-        I2C_Write(_output.GetLowData());
+        I2C_Write(_output.getLowData());
         delayMicroseconds(1); // High part of enable should be >450 nS
 
         _output.E = false;
-        I2C_Write(_output.GetLowData());
+        I2C_Write(_output.getLowData());
     }
     //delayMicroseconds(37); // Some commands have different timing requirement,
                              // so every command should handle its own delay after execution

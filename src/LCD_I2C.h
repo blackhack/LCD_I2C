@@ -34,7 +34,7 @@ struct OutputState
     uint8_t Led = 0;
     uint8_t data = 0;
 
-    uint8_t GetLowData()
+    uint8_t getLowData() const
     {
         uint8_t buffer = rs;
         buffer |= rw << 1;
@@ -45,7 +45,7 @@ struct OutputState
         return buffer;
     }
 
-    uint8_t GetHighData()
+    uint8_t getHighData() const
     {
         uint8_t buffer = rs;
         buffer |= rw << 1;
