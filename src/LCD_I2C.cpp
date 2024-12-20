@@ -21,9 +21,19 @@
 #include "LCD_I2C.h"
 #include "Wire.h"
 
+void LCD_I2C::begin(int sdaPin, int sclPin, bool beginWire)
+{
+#if defined (ESP32)
+	// ESP32 requires setting sda and scl pins.
+	Wire.setPins(sdaPin, sclPin);
+#endif
+	begin(beginWire);
+}
+
 void LCD_I2C::begin(bool beginWire)
 {
-    if (beginWire)
+
+	if (beginWire)
         Wire.begin();
 
     I2C_Write(0b00000000); // Clear i2c adapter

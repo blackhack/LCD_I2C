@@ -29,6 +29,8 @@ public:
     LCD_I2C(uint8_t address, uint8_t columns = 16, uint8_t rows = 2)
     : _address(address), _columnMax(columns-1), _rowMax(rows-1), _displayState(0x00), _entryState(0x00) {}
 
+    // Some microcontrollers require to set sda and scl pin for I2C.
+	void begin(int sdaPin, int sclPin, bool beginWire = true);
     void begin(bool beginWire = true);
     void backlight();
     void noBacklight();
@@ -91,5 +93,4 @@ private:
 	    }
 	} _output;
 };
-
 #endif
