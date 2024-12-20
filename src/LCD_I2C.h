@@ -32,14 +32,13 @@ struct OutputState
     uint8_t rw = 0;
     uint8_t E = 0;
     uint8_t Led = 0;
-    uint8_t data = 0;
 
-    uint8_t getLowData() const
+    uint8_t getLowData(uint8_t data) const
     {
         return getCommonData() | ((data & 0x0F) << 4);
     }
 
-    uint8_t getHighData() const
+    uint8_t getHighData(uint8_t data) const
     {
         return getCommonData() | (data & 0xF0);
     }
