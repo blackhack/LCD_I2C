@@ -62,7 +62,7 @@ public:
     void setCursor(uint8_t col, uint8_t row);
 
     // Method used by the Arduino class "Print" which is the one that provides the .print(string) method
-    virtual size_t write(uint8_t character);
+    size_t write(uint8_t character) override;
 
 private:
     void InitializeLCD();
