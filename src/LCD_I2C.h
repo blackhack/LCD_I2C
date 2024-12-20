@@ -92,9 +92,9 @@ private:
     void LCD_Write(uint8_t output, bool initialization = false);
 
 private:
-    uint8_t _address;
-    uint8_t _columnMax; // Last valid column index. Note the column index starts at zero.
-    uint8_t _rowMax;    // Last valid row index. Note the row index starts at zero.
+    const uint8_t _address;
+    const uint8_t _columnMax; // Last valid column index. Note the column index starts at zero.
+    const uint8_t _rowMax;    // Last valid row index. Note the row index starts at zero.
     OutputState _output;
     uint8_t _displayState;
     uint8_t _entryState;

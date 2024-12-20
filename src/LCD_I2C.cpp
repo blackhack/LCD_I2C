@@ -229,7 +229,7 @@ void LCD_I2C::setCursor(uint8_t col, uint8_t row)
     if(col > _columnMax) { col = _columnMax; } // sanity limits
     if(row > _rowMax) { row = _rowMax; } // sanity limits
 
-    uint8_t newAddress = row_offsets[row] + col;
+    const uint8_t newAddress = row_offsets[row] + col;
 
     LCD_Write(0b10000000 | newAddress);
     delayMicroseconds(37);
