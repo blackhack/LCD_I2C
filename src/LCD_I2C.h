@@ -23,32 +23,6 @@
 
 #include "Arduino.h"
 
-/* This struct helps us constructing the I2C output based on data and control outputs.
-   Because the LCD is set to 4-bit mode, 4 bits of the I2C output are for the control outputs
-   while the other 4 bits are for the 8 bits of data which are send in parts using the enable output.*/
-struct OutputState
-{
-    uint8_t rs = 0;
-    uint8_t rw = 0;
-    uint8_t E = 0;
-    uint8_t Led = 0;
-
-    uint8_t getLowData(uint8_t data) const
-    {
-        return getCommonData() | ((data & 0x0F) << 4);
-    }
-
-    uint8_t getHighData(uint8_t data) const
-    {
-        return getCommonData() | (data & 0xF0);
-    }
-
-private:
-    inline uint8_t getCommonData() const {
-    	return rs | (rw << 1) | (E << 2) | (Led << 3);
-    }
-};
-
 class LCD_I2C : public Print
 {
 public:
@@ -88,9 +62,34 @@ private:
     const uint8_t _address;
     const uint8_t _columnMax; // Last valid column index. Note the column index starts at zero.
     const uint8_t _rowMax;    // Last valid row index. Note the row index starts at zero.
-    OutputState _output;
     uint8_t _displayState;
     uint8_t _entryState;
+
+	/* This struct helps us constructing the I2C output based on data and control outputs.
+	   Because the LCD is set to 4-bit mode, 4 bits of the I2C output are for the control outputs
+	   while the other 4 bits are for the 8 bits of data which are send in parts using the enable output.*/
+	struct OutputState
+	{
+	    uint8_t rs = 0;
+	    uint8_t rw = 0;
+	    uint8_t E = 0;
+	    uint8_t Led = 0;
+
+	    uint8_t getLowData(uint8_t data) const
+	    {
+	        return getCommonData() | ((data & 0x0F) << 4);
+	    }
+
+	    uint8_t getHighData(uint8_t data) const
+	    {
+	        return getCommonData() | (data & 0xF0);
+	    }
+
+	private:
+	    inline uint8_t getCommonData() const {
+	    	return rs | (rw << 1) | (E << 2) | (Led << 3);
+	    }
+	} _output;
 };
 
 #endif
