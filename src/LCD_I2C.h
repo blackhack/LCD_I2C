@@ -67,7 +67,8 @@ public:
 private:
     void InitializeLCD();
     void I2C_Write(uint8_t output);
-    void LCD_Write(uint8_t output, bool initialization = false);
+    void LCD_WriteByte(uint8_t output);
+    inline void LCD_WriteNibble(uint8_t output);
 
 private:
     TwoWire& _wire;
@@ -84,21 +85,20 @@ private:
 	{
 	    uint8_t rs = 0;
 	    uint8_t rw = 0;
-	    uint8_t E = 0;
 	    uint8_t Led = 0;
 
-	    uint8_t getLowData(uint8_t data) const
+	    uint8_t getLowData(uint8_t data, uint8_t E) const
 	    {
-	        return getCommonData() | ((data & 0x0F) << 4);
+	        return getCommonData(E) | ((data & 0x0F) << 4);
 	    }
 
-	    uint8_t getHighData(uint8_t data) const
+	    uint8_t getHighData(uint8_t data, uint8_t E) const
 	    {
-	        return getCommonData() | (data & 0xF0);
+	        return getCommonData(E) | (data & 0xF0);
 	    }
 
 	private:
-	    inline uint8_t getCommonData() const {
+	    inline uint8_t getCommonData(uint8_t E) const {
 	    	return rs | (rw << 1) | (E << 2) | (Led << 3);
 	    }
 	} _output;
