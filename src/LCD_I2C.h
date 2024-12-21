@@ -23,24 +23,42 @@
 
 #include "Arduino.h"
 
-// Forward declaration of TwoWire avoids include of Wire.h here.
+/* Forward declaration of TwoWire avoids include of Wire.h here. */
 class TwoWire;
 
 class LCD_I2C : public Print
 {
 public:
-	// This constructor just uses the default TwoWire object 'Wire'.
+	/**
+	 * This constructor just uses the default TwoWire object 'Wire'.
+	 */
     LCD_I2C(uint8_t address, uint8_t columns = 16, uint8_t rows = 2);
 
-	// This constructor takes a TwoWire object so that the driver can
-    // work on a different interface than 'Wire'. Just pass Wire1 or
-    // Wire2 etc. as the first parameter, in case that those objects
-    // are supported by the hardware.
+	/**
+	 * This constructor takes a TwoWire object so that the driver can
+     * work on another interface.
+     * In case that the hardware has a second TwoWire interface
+     * which should be used for the LCD, just pass 'Wire1' as the
+     * first parameter. For the 3rd interface use 'Wire2', and so on.
+     *
+     * There is no need for the sketch to include the Wire.h header.
+     * Just declare the other TwoWire object to be used as 'extern'.
+     *
+     * Example:
+     *  #include <LCD_I2C.h>
+     *  extern TwoWire Wire1;
+     *  LCD_I2C(Wire1, 0x27, 16, 2);
+     *
+     */
     LCD_I2C(TwoWire& wire, uint8_t address, uint8_t columns = 16, uint8_t rows = 2);
 
-    // Some microcontrollers require to set sda and scl pin for I2C.
+    /**
+     * Some microcontrollers (like ESP32) require to set sda pin and
+     * scl pin for I2C.
+     */
 	void begin(int sdaPin, int sclPin, bool beginWire = true);
-    void begin(bool beginWire = true);
+
+	void begin(bool beginWire = true);
     void backlight();
     void noBacklight();
 

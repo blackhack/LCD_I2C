@@ -19,7 +19,9 @@
 
 #include <LCD_I2C.h>
 
-LCD_I2C lcd(0x27, 16, 2); // Default address of most PCF8574 modules, change according
+// Use the second I2C interface 'Wire1'. (E.g. Arduino Due or ESP32 support two I2C interfaces.)
+extern TwoWire Wire1;
+LCD_I2C lcd(Wire1, 0x27, 16, 2); // Default address of most PCF8574 modules, change according
 
 void setup()
 {
@@ -29,7 +31,7 @@ void setup()
     //
     //   lcd.begin(4,5);
     //
-    // which maps 'Wire' sda to pin 4 and scl to pin 5 in this example.
+    // which maps 'Wire1' sda to pin 4 and scl to pin 5 in this example.
 
     lcd.backlight();
 }
