@@ -18,6 +18,8 @@
     along with this program.If not, see < https://www.gnu.org/licenses/>.
 */
 
+#pragma once
+
 #ifndef _LCD_I2C_h
 #define _LCD_I2C_h
 
@@ -121,4 +123,5 @@ private:
 	    }
 	} _output;
 };
-#endif
+
+#endif // #ifndef _LCD_I2C_h
