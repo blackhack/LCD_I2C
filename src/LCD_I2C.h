@@ -86,7 +86,7 @@ private:
     void InitializeLCD();
     void I2C_Write(uint8_t output);
     void LCD_WriteByte(uint8_t output);
-    inline void LCD_WriteNibble(uint8_t output);
+    inline void LCD_WriteHighNibble(uint8_t output);
 
 private:
     TwoWire& _wire;

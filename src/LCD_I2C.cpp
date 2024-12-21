@@ -274,13 +274,13 @@ void LCD_I2C::InitializeLCD()
     _output.rs = 0;
     _output.rw = 0;
 
-    LCD_WriteNibble(0b00110000);
+    LCD_WriteHighNibble(0b00110000);
     delayMicroseconds(4200);
-    LCD_WriteNibble(0b00110000);
+    LCD_WriteHighNibble(0b00110000);
     delayMicroseconds(150);
-    LCD_WriteNibble(0b00110000);
+    LCD_WriteHighNibble(0b00110000);
     delayMicroseconds(37);
-    LCD_WriteNibble(0b00100000); // Function Set - 4 bits mode
+    LCD_WriteHighNibble(0b00100000); // Function Set - 4 bits mode
     delayMicroseconds(37);
     LCD_WriteByte(0b00101000); // Function Set - 4 bits(Still), 2 lines, 5x8 font
     delayMicroseconds(37);
@@ -297,7 +297,7 @@ void LCD_I2C::I2C_Write(uint8_t output)
     _wire.endTransmission();
 }
 
-void LCD_I2C::LCD_WriteNibble(uint8_t output)
+void LCD_I2C::LCD_WriteHighNibble(uint8_t output)
 {
     I2C_Write(_output.getHighData(output, true));
     delayMicroseconds(1); // High part of enable should be >450 nS
@@ -306,7 +306,7 @@ void LCD_I2C::LCD_WriteNibble(uint8_t output)
 
 void LCD_I2C::LCD_WriteByte(uint8_t output)
 {
-	LCD_WriteNibble(output);
+	LCD_WriteHighNibble(output);
 	delayMicroseconds(37); // I think we need a delay between half byte writes, but no sure how long it needs to be.
 
 	I2C_Write(_output.getLowData(output, true));
