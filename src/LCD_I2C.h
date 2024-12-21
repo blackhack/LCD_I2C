@@ -25,8 +25,18 @@
 
 #include "Arduino.h"
 
-/* Forward declaration of TwoWire avoids include of Wire.h here. */
+/**
+ * TwoWire class declaration is required for optionally using Wire1, Wire2.. objects
+ * for I2C interface.
+ * Forward declaration of TwoWire avoids include of Wire.h here and in user sketch.
+ */
+#ifdef ARDUINO_ARCH_MBED
+// Special handling for Mbed platforms required.
+namespace arduino {class MbedI2C;}
+typedef arduino::MbedI2C TwoWire;
+#else
 class TwoWire;
+#endif
 
 class LCD_I2C : public Print
 {
