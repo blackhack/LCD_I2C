@@ -41,13 +41,13 @@ class TwoWire;
 class LCD_I2C : public Print
 {
 public:
-	/**
-	 * This constructor just uses the default TwoWire object 'Wire'.
-	 */
+    /**
+     * This constructor just uses the default TwoWire object 'Wire'.
+     */
     LCD_I2C(uint8_t address, uint8_t columns = 16, uint8_t rows = 2);
 
-	/**
-	 * This constructor takes a TwoWire object so that the driver can
+    /**
+     * This constructor takes a TwoWire object so that the driver can
      * work on another interface.
      * In case that the hardware has a second TwoWire interface
      * which should be used for the LCD, just pass 'Wire1' as the
@@ -68,9 +68,9 @@ public:
      * Some microcontrollers (like ESP32) require to set sda pin and
      * scl pin for I2C.
      */
-	void begin(int sdaPin, int sclPin, bool beginWire = true);
+    void begin(int sdaPin, int sclPin, bool beginWire = true);
 
-	void begin(bool beginWire = true);
+    void begin(bool beginWire = true);
     void backlight();
     void noBacklight();
 
@@ -108,30 +108,30 @@ private:
     uint8_t _displayState;
     uint8_t _entryState;
 
-	/* This struct helps us constructing the I2C output based on data and control outputs.
-	   Because the LCD is set to 4-bit mode, 4 bits of the I2C output are for the control outputs
-	   while the other 4 bits are for the 8 bits of data which are send in parts using the enable output.*/
-	struct OutputState
-	{
-	    uint8_t rs = 0;
-	    uint8_t rw = 0;
-	    uint8_t Led = 0;
+    /* This struct helps us constructing the I2C output based on data and control outputs.
+       Because the LCD is set to 4-bit mode, 4 bits of the I2C output are for the control outputs
+       while the other 4 bits are for the 8 bits of data which are send in parts using the enable output.*/
+    struct OutputState
+    {
+        uint8_t rs = 0;
+        uint8_t rw = 0;
+        uint8_t Led = 0;
 
-	    uint8_t getLowData(uint8_t data, uint8_t E) const
-	    {
-	        return getCommonData(E) | ((data & 0x0F) << 4);
-	    }
+        uint8_t getLowData(uint8_t data, uint8_t E) const
+        {
+            return getCommonData(E) | ((data & 0x0F) << 4);
+        }
 
-	    uint8_t getHighData(uint8_t data, uint8_t E) const
-	    {
-	        return getCommonData(E) | (data & 0xF0);
-	    }
+        uint8_t getHighData(uint8_t data, uint8_t E) const
+        {
+            return getCommonData(E) | (data & 0xF0);
+        }
 
-	private:
-	    inline uint8_t getCommonData(uint8_t E) const {
-	    	return rs | (rw << 1) | (E << 2) | (Led << 3);
-	    }
-	} _output;
+    private:
+        inline uint8_t getCommonData(uint8_t E) const {
+            return rs | (rw << 1) | (E << 2) | (Led << 3);
+        }
+    } _output;
 };
 
 #endif // #ifndef _LCD_I2C_h

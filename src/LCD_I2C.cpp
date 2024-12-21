@@ -23,29 +23,29 @@
 
 LCD_I2C::LCD_I2C(TwoWire& wire, uint8_t address, uint8_t columns, uint8_t rows)
     : _wire(wire) // Use the TwoWire object passed as parameter.
-	, _address(address), _columnMax(columns-1), _rowMax(rows-1), _displayState(0x00), _entryState(0x00)
+    , _address(address), _columnMax(columns-1), _rowMax(rows-1), _displayState(0x00), _entryState(0x00)
 {
 }
 
 LCD_I2C::LCD_I2C(uint8_t address, uint8_t columns, uint8_t rows)
-	: _wire(Wire) // Use the default object 'Wire'.
-	, _address(address), _columnMax(columns-1), _rowMax(rows-1), _displayState(0x00), _entryState(0x00)
+    : _wire(Wire) // Use the default object 'Wire'.
+    , _address(address), _columnMax(columns-1), _rowMax(rows-1), _displayState(0x00), _entryState(0x00)
 {
 }
 
 void LCD_I2C::begin(int sdaPin, int sclPin, bool beginWire)
 {
 #if defined (ESP32)
-	// ESP32 requires setting sda and scl pins.
-	_wire.setPins(sdaPin, sclPin);
+    // ESP32 requires setting sda and scl pins.
+    _wire.setPins(sdaPin, sclPin);
 #endif
-	begin(beginWire);
+    begin(beginWire);
 }
 
 void LCD_I2C::begin(bool beginWire)
 {
 
-	if (beginWire)
+    if (beginWire)
         _wire.begin();
 
     I2C_Write(0b00000000); // Clear i2c adapter
@@ -306,12 +306,12 @@ void LCD_I2C::LCD_WriteHighNibble(uint8_t output)
 
 void LCD_I2C::LCD_WriteByte(uint8_t output)
 {
-	LCD_WriteHighNibble(output);
-	delayMicroseconds(37); // I think we need a delay between half byte writes, but no sure how long it needs to be.
+    LCD_WriteHighNibble(output);
+    delayMicroseconds(37); // I think we need a delay between half byte writes, but no sure how long it needs to be.
 
-	I2C_Write(_output.getLowData(output, true));
-	delayMicroseconds(1); // High part of enable should be >450 nS
-	I2C_Write(_output.getLowData(output, false));
+    I2C_Write(_output.getLowData(output, true));
+    delayMicroseconds(1); // High part of enable should be >450 nS
+    I2C_Write(_output.getLowData(output, false));
 
     //delayMicroseconds(37); // Some commands have different timing requirement,
                              // so every command should handle its own delay after execution
